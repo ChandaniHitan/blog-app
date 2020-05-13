@@ -4,8 +4,9 @@ import Header from "./components/Header";
 import CreateArea from "./Pages/CreateArea";
 import BlogPost from "./Pages/BlogPost";
 import EditArea from "./components/EditArea";
+import Selection from "./components/Section"
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App(props) {
   const [blogs, setBlogs] = useState([]);
@@ -32,14 +33,9 @@ function App(props) {
 
   // console.log(blogs);
 
-  // const updateEdit = (id, currentBlog) => {
-  //   let index = blogs.findIndex((item) => item.id === id);
-  //   let blogCopy = [...blogs];
-  //   blogCopy[index] = currentBlog;
-  //   setBlogs(blogCopy);
-
-  //   setEdited(false);
-  // };
+  const updateEdit = (currentBlog) => {
+    setBlogs(currentBlog);
+  };
 
   return (
     <Router>
@@ -67,11 +63,22 @@ function App(props) {
         />  <Route
           path="/edit/:id"
           component={() =>
-              <EditArea
+            <EditArea
+              blog={blogs}
+              updateEdit={updateEdit}
+              {...props}
+            />
+
+          }
+        />
+        <Route
+          path="/view/:id"
+          component={() =>
+            <Selection
               blog={blogs}
               {...props}
-              />
-           
+            />
+
           }
         />
 

@@ -1,53 +1,60 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useHistory } from "react-router-dom";
+
+
 function EditArea(props) {
-  let { id } = useParams();
+
   const [currentBlog, setBlog] = useState();
-  const [editBlog, setEditBlog] = useState({
-    title: "",
-    content: "",
-  });
+  let { id } = useParams();
+  let history = useHistory();
+
   const handleChanged = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setEditBlog({ editBlog, [name]: value });
+    setBlog({ ...currentBlog, [name]: value });
   };
+
   const onSave = (e) => {
     e.preventDefault();
-    // props.updateBlog(currentBlog);
+    let index = props.blog.findIndex((item) => item.id === Number(id));
+    let blogCopy = [...props.blog];
+    blogCopy[index] = currentBlog;
+    props.updateEdit(blogCopy);
+    history.push("/displaypost")
   };
+
   const findEditBlog = () => {
     const index = props.blog.findIndex((item) => item.id == id);
-console.log(props.blog[index].title);
-
     setBlog({
+      id: Number(id),
       title: props.blog[index].title,
       content: props.blog[index].content,
     });
   };
+
   useEffect(() => {
     // Update the document title using the browser API
     findEditBlog();
-  },[]);
+  }, []);
+
   return (
     <div className="createArea">
+
       <input
         name="title"
         type="text"
         onChange={handleChanged}
-        value={editBlog.title}
+        value={currentBlog && currentBlog.title}
         placeholder="Title"
-        defaultValue={currentBlog && currentBlog.title}
-      ></input>
+      />
       <textarea
         name="content"
         type="text"
         onChange={handleChanged}
-        value={editBlog.content}
-        defaultValue={currentBlog && currentBlog.content}
+        value={currentBlog && currentBlog.content}
         placeholder="Your content here"
         rows="3"
-      ></textarea>
+      />
       <button name="addButton" type="submit" onClick={(e) => onSave(e)}>
         Update
       </button>

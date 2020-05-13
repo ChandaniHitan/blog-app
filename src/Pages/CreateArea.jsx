@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
+import {useHistory} from "react-router-dom"
 function CreateArea(props) {
+  let history =  useHistory()
   const [blog, setBlog] = useState({
     title: "",
     content: "",
@@ -13,12 +14,12 @@ function CreateArea(props) {
   };
   const saveHandealer = (e) => {
     e.preventDefault();
-
     props.submitBlog(blog);
     setBlog({
       title: "",
       content: "",
     });
+    history.push("/displaypost")
   };
   return (
     <div className="createArea">
@@ -45,3 +46,6 @@ function CreateArea(props) {
 }
 
 export default CreateArea;
+
+
+
