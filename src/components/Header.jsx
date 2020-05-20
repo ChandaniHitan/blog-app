@@ -4,10 +4,9 @@ function Header() {
   return (
     <div>
       <header>
-        <h1>Blogger's paradise</h1>
-      </header>
-
-      <ul>
+        <h1 className="heading">Blogger's paradise</h1>
+        <nav>
+        <ul>
         <li>
           <Link to="/"> New Post</Link>
         </li>
@@ -15,6 +14,11 @@ function Header() {
           <Link to="/displaypost">View Post</Link>
         </li>
       </ul>
+        </nav>
+      
+      </header>
+
+      
     </div>
   );
 }
